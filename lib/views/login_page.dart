@@ -31,6 +31,8 @@ class _LoginPageState extends State<LoginPage> {
                   image: const AssetImage(
                     "assets/login_back.png",
                   ),
+                  fit: BoxFit.cover,
+                  repeat: ImageRepeat.repeatY,
                   color: whiteColor),
               Image(
                   height: MediaQuery.of(context).size.height * 0.5,
@@ -62,8 +64,7 @@ class _LoginPageState extends State<LoginPage> {
 
                     child: Column(
                       children: [
-                        Image.asset('assets/logo.png',
-                            height: 140, width: 150, fit: BoxFit.fill),
+                        Image.asset('assets/logo.png', fit: BoxFit.fill),
                         const Text("Hey,",
                             style: TextStyle(
                                 color: Color(0xFF232751),
@@ -207,7 +208,7 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                             child: TextButton(
                               onPressed: () {
-                                Get.to(HomePage());
+                                Get.offAll(EventPage());
                               },
                               child: Text(
                                 "Login",

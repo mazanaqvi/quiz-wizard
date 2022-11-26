@@ -3,26 +3,29 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:quiz_wizard/models/events.dart';
+import 'package:quiz_wizard/views/event_detail_page.dart';
 import 'package:quiz_wizard/views/general_widgets/appbar.dart';
+import 'package:quiz_wizard/views/general_widgets/general_info.dart';
 import 'package:quiz_wizard/views/login_page.dart';
 import 'package:quiz_wizard/views/styles.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class EventPage extends StatefulWidget {
+  const EventPage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<EventPage> createState() => _EventPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _EventPageState extends State<EventPage> {
   @override
   Widget build(BuildContext context) {
-    Event event =
-        Event(const Color(0xFF6AD5FF), "Sports", "assets/sports.png", 1);
+    Event event = Event(const Color(0xFF6AD5FF), "Sports", "assets/sports.png",
+        "assets/sports.png", 1, []);
     List<Event> events = event.getDummyList();
     return Scaffold(
         appBar: CustomAppBar(),
         body: ListView(
+          shrinkWrap: true,
           children: [
             Stack(
               children: [
@@ -67,7 +70,7 @@ class _HomePageState extends State<HomePage> {
                 crossAxisCount: 2,
                 mainAxisSpacing: 24.0,
                 crossAxisSpacing: 6,
-                childAspectRatio: 0.6,
+                childAspectRatio: 0.8,
                 shrinkWrap: true,
                 children: List.generate(
                   5,
@@ -80,11 +83,16 @@ class _HomePageState extends State<HomePage> {
                       child: Column(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(8.0),
-                              child: Image(
-                                image: AssetImage(events[index].imagePath),
+                            padding: const EdgeInsets.all(12.0),
+                            child: SizedBox(
+                              height: 100,
+                              width: 200,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(8.0),
+                                child: Image(
+                                  image: AssetImage(events[index].imagePath),
+                                  fit: BoxFit.fill,
+                                ),
                               ),
                             ),
                           ),
@@ -98,14 +106,29 @@ class _HomePageState extends State<HomePage> {
                                 )),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 0),
+                            padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
                             child: Text("${events[index].count} Events",
                                 style: const TextStyle(
                                   color: Colors.black,
-                                  fontSize: 12,
+                                  fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                 )),
                           ),
+                          ElevatedButton(
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all(Colors.white)),
+                              onPressed: () => {
+                                    Get.to(
+                                        EventDetailPage(event: events[index]))
+                                  },
+                              child: Text(
+                                "VIEW ALL",
+                                style: TextStyle(
+                                  color: events[index].color,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              )),
                         ],
                       ),
                     );
@@ -113,6 +136,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
+            const GeneralInfo()
           ],
         ));
   }
