@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
-import 'package:quiz_wizard/views/home_page.dart';
+import 'package:quiz_wizard/views/event_page.dart';
 import 'package:quiz_wizard/views/login_page.dart';
 import 'package:quiz_wizard/views/styles.dart';
 

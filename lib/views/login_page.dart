@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:quiz_wizard/views/event_page.dart';
 import 'package:quiz_wizard/views/styles.dart';
 
 class LoginPage extends StatefulWidget {
@@ -204,7 +206,9 @@ class _LoginPageState extends State<LoginPage> {
                               color: mainColor,
                             ),
                             child: TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Get.to(HomePage());
+                              },
                               child: Text(
                                 "Login",
                                 style: buttonText(),
