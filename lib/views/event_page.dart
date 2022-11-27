@@ -70,7 +70,7 @@ class _EventPageState extends State<EventPage> {
                 crossAxisCount: 2,
                 mainAxisSpacing: 24.0,
                 crossAxisSpacing: 6,
-                childAspectRatio: 0.8,
+                childAspectRatio: 0.7,
                 shrinkWrap: true,
                 children: List.generate(
                   5,

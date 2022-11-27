@@ -74,7 +74,7 @@ class _DetailQuizState extends State<DetailQuiz> {
                     children: [
                       Center(
                         child: Padding(
-                          padding: EdgeInsets.only(top: 32.0),
+                          padding: const EdgeInsets.only(top: 32.0),
                           child: Text(
                             "Result",
                             style: boldHeadingText().copyWith(color: mainColor),
@@ -213,10 +213,9 @@ class _DetailQuizState extends State<DetailQuiz> {
                                       if (quiz.currentQuestionIndex > 1)
                                         {quiz.currentQuestionIndex--},
                                     },
-                                child: const Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Text("Previous"),
-                                )),
+                                child: const SizedBox(
+                                    width: 80,
+                                    child: Center(child: Text("Previous")))),
                             ElevatedButton(
                                 style: ButtonStyle(
                                   backgroundColor:
@@ -228,10 +227,9 @@ class _DetailQuizState extends State<DetailQuiz> {
                                           quiz.allQuestions.length - 1)
                                         {quiz.currentQuestionIndex++},
                                     },
-                                child: const Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Text("Next"),
-                                )),
+                                child: const SizedBox(
+                                    width: 80,
+                                    child: Center(child: Text("Next")))),
                           ],
                         ),
                         const GeneralInfo()
