@@ -7,6 +7,7 @@ import 'package:quiz_wizard/models/sub_event.dart';
 import 'package:quiz_wizard/views/general_widgets/appbar.dart';
 import 'package:quiz_wizard/views/general_widgets/general_info.dart';
 import 'package:quiz_wizard/views/login_page.dart';
+import 'package:quiz_wizard/views/mcq_quiz.dart';
 import 'package:quiz_wizard/views/styles.dart';
 
 class EventDetailPage extends StatefulWidget {
@@ -155,7 +156,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
                                         backgroundColor:
                                             MaterialStateProperty.all(
                                                 Colors.white)),
-                                    onPressed: () => {},
+                                    onPressed: () => {Get.to(McqQuiz())},
                                     child: Text(
                                       "Take Quiz",
                                       style: TextStyle(

@@ -12,7 +12,7 @@ var blackGreyColor = const Color(0xFF8C8C8C);
 var greyBlackColor = const Color(0xFF505050);
 
 var whiteColor = Colors.white;
-var secondaryColor = const Color(0xFF555770);
+var secondaryColor = const Color(0xFFEDC224);
 var gradientColors = [
   const Color(0xFFF39757),
   const Color(0xFFEF7842),
