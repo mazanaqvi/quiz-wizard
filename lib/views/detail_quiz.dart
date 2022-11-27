@@ -11,14 +11,14 @@ import 'styles.dart';
 
 int score = 0;
 
-class McqQuiz extends StatefulWidget {
-  const McqQuiz({Key? key}) : super(key: key);
+class DetailQuiz extends StatefulWidget {
+  const DetailQuiz({Key? key}) : super(key: key);
 
   @override
-  _McqQuizState createState() => _McqQuizState();
+  _DetailQuizState createState() => _DetailQuizState();
 }
 
-class _McqQuizState extends State<McqQuiz> {
+class _DetailQuizState extends State<DetailQuiz> {
   int selectedAnswerId = -1;
   bool readMore = true;
   bool showResult = false;
@@ -167,9 +167,9 @@ class _McqQuizState extends State<McqQuiz> {
                             ),
                           ),
                         ),
-                        Center(
-                          child: Obx(
-                            () => DotsIndicator(
+                        Obx(
+                          () => Center(
+                            child: DotsIndicator(
                               dotsCount: quiz.allQuestions.length,
                               position:
                                   quiz.currentQuestionIndex.value.toDouble(),
@@ -184,42 +184,25 @@ class _McqQuizState extends State<McqQuiz> {
                           padding: const EdgeInsets.only(top: 8.0),
                           child: Center(
                             child: Text(
-                              "Select Answer Below",
+                              "Type Answer Below",
                               textAlign: TextAlign.center,
                               style: boldHeadingText()
                                   .copyWith(color: mainColor, fontSize: 20),
                             ),
                           ),
                         ),
-                        Obx(
-                          () => Column(
-                            children: quiz
-                                .allQuestions[quiz.currentQuestionIndex.value]
-                                .choices
-                                .map(
-                                  (choice) => Column(
-                                    children: [
-                                      AnswerTile(
-                                        answer: QuizAnswerModel(
-                                            ans: choice.ans,
-                                            isCorrect: choice.isCorrect),
-                                        isSelected:
-                                            selectedAnswerId == choice.index,
-                                        onPressed: () async {
-                                          if (selectedAnswerId != -1) {
-                                            return;
-                                          }
-                                          await _handleSelection(choice);
-                                        },
-                                        showResult: showResult,
-                                        isCorrect: choice.isCorrect,
-                                        animatedContainerDuration:
-                                            const Duration(milliseconds: 300),
-                                      ),
-                                    ],
-                                  ),
-                                )
-                                .toList(),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 18.0, bottom: 18),
+                          child: TextField(
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: const Color(0xFFE5E5E5),
+                              hintText: "Type",
+                              hintStyle: regularText(),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
                           ),
                         ),
                         Row(
@@ -227,7 +210,7 @@ class _McqQuizState extends State<McqQuiz> {
                           children: [
                             ElevatedButton(
                                 onPressed: () => {
-                                      if (quiz.currentQuestionIndex > 0)
+                                      if (quiz.currentQuestionIndex > 1)
                                         {quiz.currentQuestionIndex--},
                                     },
                                 child: const Padding(
@@ -243,7 +226,7 @@ class _McqQuizState extends State<McqQuiz> {
                                 onPressed: () => {
                                       if (quiz.currentQuestionIndex <
                                           quiz.allQuestions.length - 1)
-                                        {quiz.currentQuestionIndex++}
+                                        {quiz.currentQuestionIndex++},
                                     },
                                 child: const Padding(
                                   padding: EdgeInsets.all(8.0),
@@ -260,129 +243,5 @@ class _McqQuizState extends State<McqQuiz> {
         ),
       ),
     );
-  }
-
-  Future<void> _handleSelection(QuizAnswerModel choice) async {
-    setState(() {
-      selectedAnswerId = choice.index ?? -1;
-      showResult = true;
-    });
-    await Future.delayed(const Duration(milliseconds: 1500), () {
-      quiz.nextQuestion();
-      debugPrint('selected answer: ${choice.index}');
-      setState(() {
-        selectedAnswerId = -1;
-        showResult = false;
-      });
-    });
-  }
-}
-
-class AnswerTile extends StatelessWidget {
-  const AnswerTile({
-    Key? key,
-    required this.answer,
-    required this.isSelected,
-    required this.showResult,
-    required this.isCorrect,
-    required this.onPressed,
-    required this.animatedContainerDuration,
-  }) : super(key: key);
-
-  final QuizAnswerModel answer;
-  final bool isSelected;
-  final bool showResult;
-  final bool isCorrect;
-  final Function() onPressed;
-  final Duration animatedContainerDuration;
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: !showResult ? onPressed : null,
-      child: AnimatedContainer(
-        duration: animatedContainerDuration,
-        curve: Curves.fastOutSlowIn,
-        decoration: _buildAnswerDecoration(context),
-        padding: EdgeInsets.symmetric(
-            vertical: isSelected || (showResult && isCorrect) ? 16.0 : 8.0),
-        margin: const EdgeInsets.symmetric(vertical: 6.0),
-        child: Container(
-          height: 50,
-          decoration: BoxDecoration(color: greyColor),
-          child: Row(
-            children: [
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 16.0),
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                    color: isSelected ? mainColor : greyColor,
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: Colors.black,
-                      width: 1,
-                    )),
-                child: _buildAnswerIcon(context),
-              ),
-              Expanded(
-                child: Text(
-                  answer.ans,
-                  style: regularText().copyWith(
-                    fontSize: 20,
-                    fontWeight:
-                        isSelected ? FontWeight.bold : FontWeight.normal,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildAnswerIcon(BuildContext context) {
-    if (showResult && isCorrect) {
-      return Icon(
-        Icons.check,
-        color: isSelected ? Colors.green : mainColor,
-        size: 26,
-      );
-    }
-
-    if (isSelected) {
-      return Center(
-        child: Container(
-          width: 18,
-          height: 18,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: Theme.of(context).colorScheme.secondary,
-          ),
-        ),
-      );
-    }
-
-    return Container();
-  }
-
-  BoxDecoration _buildAnswerDecoration(BuildContext context) {
-    BoxDecoration decoration = const BoxDecoration();
-    if (!showResult) {
-      if (isSelected) {
-        decoration = roundSimpleBoxDecoration().copyWith(color: mainColor);
-      }
-    } else {
-      if (isSelected && isCorrect) {
-        score++;
-        decoration = roundSimpleBoxDecoration().copyWith(color: Colors.green);
-      } else if (isSelected && !isCorrect) {
-        decoration = roundSimpleBoxDecoration().copyWith(color: greyColor);
-      } else if (!isSelected && isCorrect) {
-        decoration = roundSimpleBoxDecoration().copyWith(
-            color: Theme.of(context).colorScheme.secondary.withOpacity(0.21));
-      }
-    }
-    return decoration;
   }
 }

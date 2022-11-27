@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:quiz_wizard/models/events.dart';
 import 'package:quiz_wizard/models/sub_event.dart';
+import 'package:quiz_wizard/views/detail_quiz.dart';
 import 'package:quiz_wizard/views/general_widgets/appbar.dart';
 import 'package:quiz_wizard/views/general_widgets/general_info.dart';
 import 'package:quiz_wizard/views/login_page.dart';
@@ -156,7 +157,12 @@ class _EventDetailPageState extends State<EventDetailPage> {
                                         backgroundColor:
                                             MaterialStateProperty.all(
                                                 Colors.white)),
-                                    onPressed: () => {Get.to(McqQuiz())},
+                                    onPressed: () => {
+                                          if (index % 2 == 0)
+                                            {Get.to(McqQuiz())}
+                                          else
+                                            {Get.to(DetailQuiz())}
+                                        },
                                     child: Text(
                                       "Take Quiz",
                                       style: TextStyle(

@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:quiz_wizard/views/settings.dart';
 import 'package:quiz_wizard/views/styles.dart';
 
 // TODO: Needs refactoring
 AppBar CustomAppBar({
-  String? titleText,
-  Widget? leading,
-  double? titleFont,
+  bool isNotSettingPage = true,
   List<Widget>? actions,
 }) {
   return AppBar(
@@ -50,14 +49,18 @@ AppBar CustomAppBar({
                         width: 40, // Your width
                         child: Image(image: AssetImage('assets/c3.png'))),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    child: Icon(
-                      Icons.keyboard_arrow_down_outlined,
-                      color: mainColor,
-                      size: 40,
-                    ),
-                  )
+                  isNotSettingPage
+                      ? Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.keyboard_arrow_down_outlined,
+                              color: mainColor,
+                              size: 40,
+                            ),
+                            onPressed: () => {Get.to(Settings())},
+                          ))
+                      : Container()
                 ])
                 // Your widgets here
               ]),
