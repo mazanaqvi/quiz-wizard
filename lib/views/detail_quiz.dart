@@ -210,7 +210,7 @@ class _DetailQuizState extends State<DetailQuiz> {
                           children: [
                             ElevatedButton(
                                 onPressed: () => {
-                                      if (quiz.currentQuestionIndex > 1)
+                                      if (quiz.currentQuestionIndex > 0)
                                         {quiz.currentQuestionIndex--},
                                     },
                                 child: const SizedBox(

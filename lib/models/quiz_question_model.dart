@@ -13,7 +13,7 @@ class QuizQuestionModel {
 
   List<QuizQuestionModel> getQuestions() {
     List<QuizAnswerModel> answerChoices =
-        QuizAnswerModel(ans: "", isCorrect: false).getAnswers();
+        QuizAnswerModel(choiceIndex: 0, ans: "", isCorrect: false).getAnswers();
     List<QuizQuestionModel> questions = [];
     questions.add(QuizQuestionModel(
         choices: answerChoices,

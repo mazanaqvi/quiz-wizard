@@ -23,7 +23,7 @@ class _EventPageState extends State<EventPage> {
         "assets/sports.png", 1, []);
     List<Event> events = event.getDummyList();
     return Scaffold(
-        appBar: CustomAppBar(),
+        appBar: CustomAppBar(isNotHomePage: false),
         body: ListView(
           shrinkWrap: true,
           children: [

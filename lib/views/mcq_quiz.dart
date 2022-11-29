@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import 'package:quiz_wizard/models/quiz.dart';
 import 'package:quiz_wizard/models/quiz_answer_model.dart';
 import 'package:dots_indicator/dots_indicator.dart';
@@ -22,6 +23,8 @@ class _McqQuizState extends State<McqQuiz> {
   int selectedAnswerId = -1;
   bool readMore = true;
   bool showResult = false;
+  int _groupValue = -1;
+
   late QuizModel quiz;
   //diMe1oJLBWz9bV05fA0D quiz ID in firebase
   QuizQuestionModel question =
@@ -74,7 +77,7 @@ class _McqQuizState extends State<McqQuiz> {
                     children: [
                       Center(
                         child: Padding(
-                          padding: EdgeInsets.only(top: 32.0),
+                          padding: const EdgeInsets.only(top: 32.0),
                           child: Text(
                             "Result",
                             style: boldHeadingText().copyWith(color: mainColor),
@@ -113,9 +116,7 @@ class _McqQuizState extends State<McqQuiz> {
                       ),
                     ],
                   )
-                :
-// question != null?
-                Padding(
+                : Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 24.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -142,6 +143,7 @@ class _McqQuizState extends State<McqQuiz> {
                             ),
                           ),
                         ),
+
                         question.imgURL != null
                             ? SizedBox(
                                 height:
@@ -180,53 +182,120 @@ class _McqQuizState extends State<McqQuiz> {
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: Center(
-                            child: Text(
-                              "Select Answer Below",
-                              textAlign: TextAlign.center,
-                              style: boldHeadingText()
-                                  .copyWith(color: mainColor, fontSize: 20),
+
+                        // Obx(
+                        //   () => Column(
+                        //     children: quiz
+                        //         .allQuestions[quiz.currentQuestionIndex.value]
+                        //         .choices
+                        //         .map(
+                        //           (choice) => Column(
+                        //             children: [
+                        //               AnswerTile(
+                        //                 answer: QuizAnswerModel(
+                        //                     ans: choice.ans,
+                        //                     isCorrect: choice.isCorrect),
+                        //                 isSelected:
+                        //                     selectedAnswerId == choice.index,
+                        //                 onPressed: () async {
+                        //                   if (selectedAnswerId != -1) {
+                        //                     return;
+                        //                   }
+                        //                   await _handleSelection(choice);
+                        //                 },
+                        //                 showResult: showResult,
+                        //                 isCorrect: choice.isCorrect,
+                        //                 animatedContainerDuration:
+                        //                     const Duration(milliseconds: 300),
+                        //               ),
+                        //             ],
+                        //           ),
+                        //         )
+                        //         .toList(),
+                        //   ),
+                        // ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: Center(
+                                child: Text(
+                                  "Select Answer Below",
+                                  textAlign: TextAlign.center,
+                                  style: boldHeadingText()
+                                      .copyWith(color: mainColor, fontSize: 20),
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                        Obx(
-                          () => Column(
-                            children: quiz
-                                .allQuestions[quiz.currentQuestionIndex.value]
-                                .choices
-                                .map(
-                                  (choice) => Column(
-                                    children: [
-                                      AnswerTile(
-                                        answer: QuizAnswerModel(
-                                            ans: choice.ans,
-                                            isCorrect: choice.isCorrect),
-                                        isSelected:
-                                            selectedAnswerId == choice.index,
-                                        onPressed: () async {
-                                          if (selectedAnswerId != -1) {
-                                            return;
-                                          }
-                                          await _handleSelection(choice);
+                            Column(
+                              children: quiz
+                                  .allQuestions[quiz.currentQuestionIndex.value]
+                                  .choices
+                                  .map(
+                                    (choice) => Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: RadioListTile(
+                                        title: Text(choice.ans),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                        ),
+                                        selectedTileColor: mainColor,
+                                        value: choice.choiceIndex,
+                                        tileColor: greyColor,
+                                        groupValue: _groupValue,
+                                        selected: false,
+                                        onChanged: (val) {
+                                          setState(
+                                              () => _groupValue = val ?? -1);
                                         },
-                                        showResult: showResult,
-                                        isCorrect: choice.isCorrect,
-                                        animatedContainerDuration:
-                                            const Duration(milliseconds: 300),
                                       ),
-                                    ],
-                                  ),
-                                )
-                                .toList(),
-                          ),
+                                    ),
+                                  )
+                                  .toList(),
+                            ),
+
+                            // SizedBox(
+                            //   height: 100,
+                            //   child: ListView(
+                            //     children: <Widget>[
+                            //       Expanded(
+                            //         flex: 1,
+                            //         child: RadioListTile(
+                            //           value: 0,
+                            //           groupValue: _groupValue,
+                            //           title: Text("Male"),
+                            //           onChanged: (newValue) => setState(
+                            //               () => _groupValue = newValue ?? 1),
+                            //           activeColor: mainColor,
+                            //           selected: false,
+                            //         ),
+                            //       ),
+                            //       Expanded(
+                            //         flex: 1,
+                            //         child: RadioListTile(
+                            //           value: 1,
+                            //           groupValue: _groupValue,
+                            //           title: Text("Female"),
+                            //           onChanged: (newValue) => setState(
+                            //               () => _groupValue = newValue ?? 1),
+                            //           activeColor: Colors.red,
+                            //           selected: false,
+                            //         ),
+                            //       ),
+                            //     ],
+                            //   ),
+                            // ),
+                          ],
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             ElevatedButton(
                                 onPressed: () => {
+                                      setState(() => _groupValue = -1),
                                       if (quiz.currentQuestionIndex > 0)
                                         {quiz.currentQuestionIndex--},
                                     },
@@ -241,9 +310,12 @@ class _McqQuizState extends State<McqQuiz> {
                                           secondaryColor),
                                 ),
                                 onPressed: () => {
+                                      setState(() => _groupValue = -1),
                                       if (quiz.currentQuestionIndex <
                                           quiz.allQuestions.length - 1)
                                         {quiz.currentQuestionIndex++}
+                                      else
+                                        {}
                                     },
                                 child: const Padding(
                                   padding: EdgeInsets.all(8.0),
@@ -260,129 +332,5 @@ class _McqQuizState extends State<McqQuiz> {
         ),
       ),
     );
-  }
-
-  Future<void> _handleSelection(QuizAnswerModel choice) async {
-    setState(() {
-      selectedAnswerId = choice.index ?? -1;
-      showResult = true;
-    });
-    await Future.delayed(const Duration(milliseconds: 1500), () {
-      quiz.nextQuestion();
-      debugPrint('selected answer: ${choice.index}');
-      setState(() {
-        selectedAnswerId = -1;
-        showResult = false;
-      });
-    });
-  }
-}
-
-class AnswerTile extends StatelessWidget {
-  const AnswerTile({
-    Key? key,
-    required this.answer,
-    required this.isSelected,
-    required this.showResult,
-    required this.isCorrect,
-    required this.onPressed,
-    required this.animatedContainerDuration,
-  }) : super(key: key);
-
-  final QuizAnswerModel answer;
-  final bool isSelected;
-  final bool showResult;
-  final bool isCorrect;
-  final Function() onPressed;
-  final Duration animatedContainerDuration;
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: !showResult ? onPressed : null,
-      child: AnimatedContainer(
-        duration: animatedContainerDuration,
-        curve: Curves.fastOutSlowIn,
-        decoration: _buildAnswerDecoration(context),
-        padding: EdgeInsets.symmetric(
-            vertical: isSelected || (showResult && isCorrect) ? 16.0 : 8.0),
-        margin: const EdgeInsets.symmetric(vertical: 6.0),
-        child: Container(
-          height: 50,
-          decoration: BoxDecoration(color: greyColor),
-          child: Row(
-            children: [
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 16.0),
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                    color: isSelected ? mainColor : greyColor,
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: Colors.black,
-                      width: 1,
-                    )),
-                child: _buildAnswerIcon(context),
-              ),
-              Expanded(
-                child: Text(
-                  answer.ans,
-                  style: regularText().copyWith(
-                    fontSize: 20,
-                    fontWeight:
-                        isSelected ? FontWeight.bold : FontWeight.normal,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildAnswerIcon(BuildContext context) {
-    if (showResult && isCorrect) {
-      return Icon(
-        Icons.check,
-        color: isSelected ? Colors.green : mainColor,
-        size: 26,
-      );
-    }
-
-    if (isSelected) {
-      return Center(
-        child: Container(
-          width: 18,
-          height: 18,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: Theme.of(context).colorScheme.secondary,
-          ),
-        ),
-      );
-    }
-
-    return Container();
-  }
-
-  BoxDecoration _buildAnswerDecoration(BuildContext context) {
-    BoxDecoration decoration = const BoxDecoration();
-    if (!showResult) {
-      if (isSelected) {
-        decoration = roundSimpleBoxDecoration().copyWith(color: mainColor);
-      }
-    } else {
-      if (isSelected && isCorrect) {
-        score++;
-        decoration = roundSimpleBoxDecoration().copyWith(color: Colors.green);
-      } else if (isSelected && !isCorrect) {
-        decoration = roundSimpleBoxDecoration().copyWith(color: greyColor);
-      } else if (!isSelected && isCorrect) {
-        decoration = roundSimpleBoxDecoration().copyWith(
-            color: Theme.of(context).colorScheme.secondary.withOpacity(0.21));
-      }
-    }
-    return decoration;
   }
 }

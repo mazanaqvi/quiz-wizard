@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:get/get.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:quiz_wizard/controllers/avatar_controller.dart';
 import 'package:quiz_wizard/views/general_widgets/appbar.dart';
 import 'package:quiz_wizard/views/general_widgets/general_info.dart';
 import 'package:quiz_wizard/views/styles.dart';
@@ -13,7 +16,15 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
+  final AvatarController avatarController = Get.find(tag: 'avatarController');
   var grades = [1, 2, 3, 4, 5, 6, 7, 8];
+  List<String> avatarsPath = [
+    "assets/c1.png",
+    "assets/c2.png",
+    "assets/c3.png",
+    "assets/c4.png",
+    "assets/c5.png",
+  ];
   int grade = 1;
   @override
   Widget build(BuildContext context) {
@@ -37,11 +48,15 @@ class _SettingsState extends State<Settings> {
                   padding: const EdgeInsets.only(top: 2.0),
                   child: Column(
                     children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(8.0),
-                        child: const Image(
-                          image: AssetImage("assets/person.png"),
-                        ),
+                      SizedBox(
+                        height: 200,
+                        child: Obx(() => ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: Image(
+                                image: AssetImage(
+                                    avatarController.avatarProfile.value),
+                              ),
+                            )),
                       ),
                       const Padding(
                         padding: EdgeInsets.only(top: 18.0),
@@ -61,51 +76,21 @@ class _SettingsState extends State<Settings> {
             padding: const EdgeInsets.all(18.0),
             child: SizedBox(
               height: 100,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: const [
-                  Padding(
-                    padding: EdgeInsets.only(right: 8.0),
-                    child: Image(image: AssetImage("assets/c1.png")),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(right: 8.0),
-                    child: Image(image: AssetImage("assets/c2.png")),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(right: 8.0),
-                    child: Image(image: AssetImage("assets/c3.png")),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(right: 8.0),
-                    child: Image(image: AssetImage("assets/c4.png")),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(right: 8.0),
-                    child: Image(image: AssetImage("assets/c5.png")),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(right: 8.0),
-                    child: Image(image: AssetImage("assets/c1.png")),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(right: 8.0),
-                    child: Image(image: AssetImage("assets/c2.png")),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(right: 8.0),
-                    child: Image(image: AssetImage("assets/c3.png")),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(right: 8.0),
-                    child: Image(image: AssetImage("assets/c4.png")),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(right: 8.0),
-                    child: Image(image: AssetImage("assets/c5.png")),
-                  ),
-                ],
-              ),
+              child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: avatarsPath.length,
+                  itemBuilder: (BuildContext buildContext, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: GestureDetector(
+                          onTap: () async => {
+                                avatarController.avatarProfile.value =
+                                    avatarsPath[index],
+                                avatarController.saveToSharePref()
+                              },
+                          child: Image(image: AssetImage(avatarsPath[index]))),
+                    );
+                  }),
             ),
           ),
           const Center(

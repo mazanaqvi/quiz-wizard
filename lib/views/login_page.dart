@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:quiz_wizard/controllers/avatar_controller.dart';
 import 'package:quiz_wizard/views/event_page.dart';
 import 'package:quiz_wizard/views/styles.dart';
 
@@ -13,6 +14,15 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
+    final AvatarController avatarController = Get.find(tag: 'avatarController');
+
+    List<String> avatarsPath = [
+      "assets/c1.png",
+      "assets/c2.png",
+      "assets/c3.png",
+      "assets/c4.png",
+      "assets/c5.png",
+    ];
     return Container(
       decoration: BoxDecoration(
           color: mainColor,
@@ -91,66 +101,31 @@ class _LoginPageState extends State<LoginPage> {
                                   fontSize: 20,
                                 )),
                             Padding(
-                              padding:
-                                  const EdgeInsets.fromLTRB(14.0, 0, 14, 0),
+                              padding: const EdgeInsets.all(18.0),
                               child: SizedBox(
                                 height:
                                     MediaQuery.of(context).size.height * 0.06,
-                                child: ListView(
-                                  scrollDirection: Axis.horizontal,
-                                  children: const [
-                                    Padding(
-                                      padding: EdgeInsets.only(right: 8.0),
-                                      child: Image(
-                                          image: AssetImage("assets/c1.png")),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(right: 8.0),
-                                      child: Image(
-                                          image: AssetImage("assets/c2.png")),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(right: 8.0),
-                                      child: Image(
-                                          image: AssetImage("assets/c3.png")),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(right: 8.0),
-                                      child: Image(
-                                          image: AssetImage("assets/c4.png")),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(right: 8.0),
-                                      child: Image(
-                                          image: AssetImage("assets/c5.png")),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(right: 8.0),
-                                      child: Image(
-                                          image: AssetImage("assets/c1.png")),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(right: 8.0),
-                                      child: Image(
-                                          image: AssetImage("assets/c2.png")),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(right: 8.0),
-                                      child: Image(
-                                          image: AssetImage("assets/c3.png")),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(right: 8.0),
-                                      child: Image(
-                                          image: AssetImage("assets/c4.png")),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(right: 8.0),
-                                      child: Image(
-                                          image: AssetImage("assets/c5.png")),
-                                    ),
-                                  ],
-                                ),
+                                child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: avatarsPath.length,
+                                    itemBuilder:
+                                        (BuildContext buildContext, int index) {
+                                      return Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 8.0),
+                                        child: GestureDetector(
+                                            onTap: () async => {
+                                                  avatarController
+                                                          .avatarProfile.value =
+                                                      avatarsPath[index],
+                                                  avatarController
+                                                      .saveToSharePref()
+                                                },
+                                            child: Image(
+                                                image: AssetImage(
+                                                    avatarsPath[index]))),
+                                      );
+                                    }),
                               ),
                             ),
                             Padding(
