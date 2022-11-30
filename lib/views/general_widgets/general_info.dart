@@ -145,7 +145,7 @@ class GeneralInfo extends StatelessWidget {
             ],
           ),
           const Padding(
-            padding: EdgeInsets.fromLTRB(18.0, 8, 0, 18),
+            padding: EdgeInsets.fromLTRB(20.0, 8, 0, 18),
             child: Text("News Feed",
                 style: TextStyle(
                   color: Colors.black,

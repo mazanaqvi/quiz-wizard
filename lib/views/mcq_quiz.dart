@@ -7,6 +7,7 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:quiz_wizard/models/quiz_question_model.dart';
 import 'package:quiz_wizard/views/general_widgets/appbar.dart';
 import 'package:quiz_wizard/views/general_widgets/general_info.dart';
+import 'package:quiz_wizard/views/result_page.dart';
 
 import 'styles.dart';
 
@@ -98,7 +99,7 @@ class _McqQuizState extends State<McqQuiz> {
                       ),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          primary: mainColor,
+                          backgroundColor: mainColor,
                           shadowColor: Colors.transparent,
                           shape: const RoundedRectangleBorder(
                             borderRadius:
@@ -315,7 +316,13 @@ class _McqQuizState extends State<McqQuiz> {
                                           quiz.allQuestions.length - 1)
                                         {quiz.currentQuestionIndex++}
                                       else
-                                        {}
+                                        {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ResultPage()))
+                                        }
                                     },
                                 child: const Padding(
                                   padding: EdgeInsets.all(8.0),

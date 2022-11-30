@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:quiz_wizard/models/events.dart';
 import 'package:quiz_wizard/models/sub_event.dart';
 import 'package:quiz_wizard/views/detail_quiz.dart';
+import 'package:quiz_wizard/views/detail_quiz_3.dart';
 import 'package:quiz_wizard/views/general_widgets/appbar.dart';
 import 'package:quiz_wizard/views/general_widgets/general_info.dart';
 import 'package:quiz_wizard/views/login_page.dart';
@@ -158,10 +159,12 @@ class _EventDetailPageState extends State<EventDetailPage> {
                                             MaterialStateProperty.all(
                                                 Colors.white)),
                                     onPressed: () => {
-                                          if (index % 2 == 0)
+                                          if (index % 3 == 0)
                                             {Get.to(McqQuiz())}
-                                          else
+                                          else if (index % 3 == 1)
                                             {Get.to(DetailQuiz())}
+                                          else
+                                            {Get.to(DetailQuiz3())}
                                         },
                                     child: Text(
                                       "Take Quiz",

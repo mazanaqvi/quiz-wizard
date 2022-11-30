@@ -11,14 +11,14 @@ import 'styles.dart';
 
 int score = 0;
 
-class DetailQuiz extends StatefulWidget {
-  const DetailQuiz({Key? key}) : super(key: key);
+class DetailQuiz3 extends StatefulWidget {
+  const DetailQuiz3({Key? key}) : super(key: key);
 
   @override
-  _DetailQuizState createState() => _DetailQuizState();
+  _DetailQuiz3State createState() => _DetailQuiz3State();
 }
 
-class _DetailQuizState extends State<DetailQuiz> {
+class _DetailQuiz3State extends State<DetailQuiz3> {
   int selectedAnswerId = -1;
   bool readMore = true;
   bool showResult = false;
@@ -148,10 +148,10 @@ class _DetailQuizState extends State<DetailQuiz> {
                           question.imgURL != null
                               ? SizedBox(
                                   height:
-                                      MediaQuery.of(context).size.height * 0.25,
+                                      MediaQuery.of(context).size.height * 0.3,
                                   child: Center(
                                     child: Image.asset(
-                                        "assets/bulb.png" //can't be null alrady checked
+                                        "assets/man.png" //can't be null alrady checked
                                         ),
                                   ),
                                 )

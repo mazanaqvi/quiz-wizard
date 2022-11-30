@@ -32,45 +32,32 @@ class _SettingsState extends State<Settings> {
       appBar: CustomAppBar(isNotSettingPage: false),
       body: ListView(
         children: [
-          Stack(
-            children: [
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 15.0),
-                  child: Image(
-                    image: const AssetImage("assets/emoji.png"),
-                    color: greyColor,
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 2.0),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 200,
+                    child: Obx(() => ClipRRect(
+                          borderRadius: BorderRadius.circular(8.0),
+                          child: Image(
+                            image: AssetImage(
+                                avatarController.avatarProfile.value),
+                          ),
+                        )),
                   ),
-                ),
-              ),
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 2.0),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 200,
-                        child: Obx(() => ClipRRect(
-                              borderRadius: BorderRadius.circular(8.0),
-                              child: Image(
-                                image: AssetImage(
-                                    avatarController.avatarProfile.value),
-                              ),
-                            )),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(top: 18.0),
-                        child: Text(
-                          "Choose your avatar",
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ],
+                  const Padding(
+                    padding: EdgeInsets.only(top: 18.0),
+                    child: Text(
+                      "Choose your avatar",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
                   ),
-                ),
+                ],
               ),
-            ],
+            ),
           ),
           Padding(
             padding: const EdgeInsets.all(18.0),
